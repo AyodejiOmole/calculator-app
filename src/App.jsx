@@ -4,6 +4,7 @@ import { symbols } from './assets/symbols';
 
 function App() {
   const [figures, setFigures] = useState([]);
+  const [light, setLight] = useState(false);
 
   const handleClick = (symbol) => {
     if(symbol === "C") {
@@ -26,13 +27,22 @@ function App() {
     let final;
     for(var i = 0; i < figures.length; i++) {
       if(!checkNumber(figures[i])) {
-        final = Number(figures.slice(0, i).join("")) * Number([...figures.slice(i + 1, -1), figures.pop()].join(""));
+        if(figures[i] === "+") {
+          final = Number(figures.slice(0, i).join("")) + Number([...figures.slice(i + 1, -1), figures.pop()].join(""));
+        } else if(figures[i] === "-") {
+          final = Number(figures.slice(0, i).join("")) - Number([...figures.slice(i + 1, -1), figures.pop()].join(""));
+        } else if(figures[i] === "x") {
+          final = Number(figures.slice(0, i).join("")) * Number([...figures.slice(i + 1, -1), figures.pop()].join(""));
+        } else {
+          final = Number(figures.slice(0, i).join("")) / Number([...figures.slice(i + 1, -1), figures.pop()].join(""));
+        }
       }
     }
     return final;
   }
 
   const toggleMode = () => {
+    setLight(!light);
     document.documentElement.classList.toggle("dark");
   }
 
@@ -46,10 +56,13 @@ function App() {
 
   return (
     <div className='lg:mx-5'>
-      <div className="flex justify-between px-20 align-center py-3">
-          <h1 className='font-bold text-3xl text-slate-800 dark:text-white italic'>Calculator</h1>
-          <div onClick={toggleMode} className="flex justify-end align-center">
-            Switch
+      <div className="flex justify-between lg:px-20 px-10 align-center py-3">
+          <h1 className='font-bold text-3xl flex align-center text-slate-800 dark:text-white italic'>Calculator</h1>
+          <div onClick={toggleMode} className="cursor-pointer bg-slate-200 flex align-center p-2 rounded-full">
+            {  
+                light ? <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"><path fill="#FFF" fill-rule="evenodd" d="M13 21a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-5.657-2.343a1 1 0 010 1.414l-2.121 2.121a1 1 0 01-1.414-1.414l2.12-2.121a1 1 0 011.415 0zm12.728 0l2.121 2.121a1 1 0 01-1.414 1.414l-2.121-2.12a1 1 0 011.414-1.415zM13 8a5 5 0 110 10 5 5 0 010-10zm12 4a1 1 0 110 2h-3a1 1 0 110-2h3zM4 12a1 1 0 110 2H1a1 1 0 110-2h3zm18.192-8.192a1 1 0 010 1.414l-2.12 2.121a1 1 0 01-1.415-1.414l2.121-2.121a1 1 0 011.414 0zm-16.97 0l2.121 2.12A1 1 0 015.93 7.344L3.808 5.222a1 1 0 011.414-1.414zM13 0a1 1 0 011 1v3a1 1 0 11-2 0V1a1 1 0 011-1z"/></svg>
+                : <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"><path fill="#FFF" fill-rule="evenodd" d="M13 0c.81 0 1.603.074 2.373.216C10.593 1.199 7 5.43 7 10.5 7 16.299 11.701 21 17.5 21c2.996 0 5.7-1.255 7.613-3.268C23.22 22.572 18.51 26 13 26 5.82 26 0 20.18 0 13S5.82 0 13 0z"/></svg>
+            }
           </div>
         </div>
       <div className='lg:w-[35%] mt-5 md:w-[50%] w-[90%] bg-slate-100 dark:bg-slate-900 py-3 px-5 mx-auto rounded-md shadow-lg'>
