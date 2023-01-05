@@ -1,34 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from 'react';
+import Buttons from './components/Buttons';
 
+const symbols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "=", "/"];
 function App() {
-  const [count, setCount] = useState(0)
+
+  const toggleMode = () => {
+    document.documentElement.classList.toggle("dark");
+  }
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className='lg:mx-5'>
+      <div className='lg:w-[30%] md:w-[50%] mt-20 w-[90%] bg-slate-100 dark:bg-slate-900 mx-auto rounded-md shadow-lg'>
+        <button onClick={toggleMode}>
+          Switch
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <p>This is it.</p>
+        <div className='grid grid-cols-4'>
+          {symbols.map((symbol, index) => {
+            return <div key={index}>
+              <Buttons symbol={symbol}/>
+            </div>
+          })}
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   )
 }
 
-export default App
+export default App;
