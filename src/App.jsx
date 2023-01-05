@@ -6,9 +6,30 @@ function App() {
   const [figures, setFigures] = useState([]);
 
   const handleClick = (symbol) => {
-    setFigures((prev) => {
-      return [...prev, symbol];
-    });
+    if(symbol === "C") {
+      setFigures([]);
+    } else if(symbol === "<") {
+      setFigures(prev => {
+        return [...prev.slice(0, prev.length - 1)];
+      });
+    } else if(symbol === "=") {
+      const solution = calculate();
+      setFigures([solution]);
+    } else {
+      setFigures((prev) => {
+        return [...prev, symbol];
+      });
+    }
+  }
+
+  function calculate() {
+    let final;
+    for(var i = 0; i < figures.length; i++) {
+      if(!checkNumber(figures[i])) {
+        final = Number(figures.slice(0, i).join("")) * Number([...figures.slice(i + 1, -1), figures.pop()].join(""));
+      }
+    }
+    return final;
   }
 
   const toggleMode = () => {
