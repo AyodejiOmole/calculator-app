@@ -1,12 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Buttons from './components/Buttons';
 
 const symbols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "=", "/"];
 function App() {
 
+  const [figures, setFigures] = useState([]);
+
+  const handleClick = (symbol) => {
+    setFigures((prev) => {
+      // const newArray = prev.push(symbol);
+      // console.log(newArray);
+      return [...prev, symbol];
+    });
+  }
+
   const toggleMode = () => {
     document.documentElement.classList.toggle("dark");
   }
+
+  // useEffect(() => {
+  //   console.log(figures.join(""));
+  // }, [figures]);
 
   return (
     <div className='lg:mx-5'>
@@ -14,11 +28,11 @@ function App() {
         <button onClick={toggleMode}>
           Switch
         </button>
-        <p>This is it.</p>
+        <p>{figures.join("")}</p>
         <div className='grid grid-cols-4'>
           {symbols.map((symbol, index) => {
             return <div key={index}>
-              <Buttons symbol={symbol}/>
+              <Buttons symbol={symbol} handleClick={handleClick}/>
             </div>
           })}
         </div>
