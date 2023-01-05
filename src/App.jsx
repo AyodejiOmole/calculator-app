@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Buttons from './components/Buttons';
 import { symbols } from './assets/symbols';
 
@@ -7,8 +7,6 @@ function App() {
 
   const handleClick = (symbol) => {
     setFigures((prev) => {
-      // const newArray = prev.push(symbol);
-      // console.log(newArray);
       return [...prev, symbol];
     });
   }
@@ -17,17 +15,11 @@ function App() {
     document.documentElement.classList.toggle("dark");
   }
 
-  // useEffect(() => {
-  //   console.log(figures.join(""));
-  // }, [figures]);
-
   const checkNumber = (symbol) => {
     const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     if(numbers.includes(Number(symbol))) {
-      // console.log(symbol);
       return true;
     }
-    // console.log(symbol);
     return false;
  }
 
